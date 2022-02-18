@@ -1,36 +1,45 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import {
+  getUserByUserId,
+  updateFollowedUserFollowers,
+  updateLoggedInUserFollowing,
+} from "../../services/firebase";
 export default function SuggestedProfile({
-  spDocId,
+  profileDocId,
   username,
   profileId,
-  loggedInUserDocId,
   userId,
+  loggedInUserDocId,
 }) {
   const [followed, setFollowed] = useState(false);
 
-  async function handleFollowers() {
+  async function handleFollowUser() {
     setFollowed(true);
+    await updateLoggedInUserFollowing(loggedInUserDocId, profileId, false);
+    await updateFollowedUserFollowers(profileDocId, userId, false);
   }
 
   return !followed ? (
     <div className="flex flex-row items-center align-items justify-between">
-      <div className="flex items-center just">
+      <div className="flex items-center justify-between">
         <img
+          className="rounded-full w-8 flex mr-3"
+          src={`/images/avatars/${username}.jpg`}
           alt=""
-          src={`./images/avatars/${username}.jpg`}
-          className="rounded   w-8 flex mr-3"
+          onError={(e) => {
+            e.target.src = `/images/avatars/default.png`;
+          }}
         />
         <Link to={`/p/${username}`}>
-          <p className="font-bold text-sm ">{username}</p>
+          <p className="font-bold text-sm">{username}</p>
         </Link>
       </div>
-
       <button
-        type="button"
-        onClick={() => console.log("follow thi user")}
         className="text-xs font-bold text-blue-medium"
+        type="button"
+        onClick={handleFollowUser}
       >
         Follow
       </button>
@@ -39,10 +48,9 @@ export default function SuggestedProfile({
 }
 
 SuggestedProfile.propTypes = {
-  spDocId: PropTypes.string.isRequired,
+  profileDocId: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
   profileId: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
-  fullName: PropTypes.string.isRequired,
-  loggedInUserDocId: PropTypes.string,
+  loggedInUserDocId: PropTypes.string.isRequired,
 };

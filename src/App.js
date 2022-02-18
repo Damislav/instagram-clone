@@ -4,7 +4,6 @@ import * as ROUTES from "./constants/routes";
 import UserContext from "./context/user";
 import useAuthListeners from "./hooks/useAuthListeners";
 import "./wdyr";
-
 const Login = lazy(() => import("./pages/login"));
 const SignUp = lazy(() => import("./pages/sign-up"));
 const Dashboard = lazy(() => import("./pages/dashboard"));

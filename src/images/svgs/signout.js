@@ -3,7 +3,7 @@ import React from "react";
 export default function () {
   return (
     <svg
-      style={{ width: "24px", height: "24" }}
+      style={{ width: "34px", height: "34" }}
       className="w-8  mr-6 text-black-light cursor-pointer"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"

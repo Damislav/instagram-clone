@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import "./styles/app.css";
+import "./styles/tailwind.css";
 import App from "./App";
 import FirebaseContext from "./context/firebase";
 import { firebase, FieldValue } from "./lib/firebase";

@@ -7,14 +7,14 @@ export default function Sidebar() {
   const {
     user: { docId, fullname, username, userId, following },
   } = useUser();
-  // console.log("sidebar", fullname, username, userId, following);
+
   return (
-    <div className="p-4">
-      <User />
+    <div className="p-4  ">
+      <User username={username} fullName={fullname} />
       <Suggestions
-        loggedInUserDocId={docId}
-        following={following}
         userId={userId}
+        following={following}
+        loggedInUserDocId={docId}
       />
     </div>
   );

@@ -1,7 +1,7 @@
 export default function () {
   return (
     <svg
-      style={{ width: "24px", height: "24" }}
+      style={{ width: "34px", height: "34" }}
       xmlns="http://www.w3.org/2000/svg"
       className="w-8   mr-6 text-black-light cursor-pointer"
       fill="none"
