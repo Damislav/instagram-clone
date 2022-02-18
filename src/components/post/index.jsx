@@ -19,7 +19,11 @@ export default function Post({ content }) {
         likedPhoto={content.userLikedPhoto}
         handleFocus={handleFocus}
       />
-      <Footer username={content.username} caption={content.caption} />
+      <Footer
+        posted={content.dateCreated}
+        username={content.username}
+        caption={content.caption}
+      />
       <Comments
         posted={content.dateCreated}
         commentInput={commentInput}

@@ -13,7 +13,7 @@ export const Timeline = () => {
     <div className="container col-span-2">
       {!photos ? (
         <>
-          <Skeleton count={4} width={640} height={600} />s
+          <Skeleton count={4} width={640} height={600} />
         </>
       ) : photos.length > 0 ? (
         photos.map((content) => <Post content={content} key={content.docId} />)

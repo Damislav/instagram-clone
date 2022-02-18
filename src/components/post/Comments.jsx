@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { formatDistance } from "date-fns";
 import { Link } from "react-router-dom";
@@ -15,7 +15,7 @@ export default function Comments({
   return (
     <>
       <div className="p-4 pt-1 pb-4">
-        {allComments.length >= 3 && (
+        {allComments.length <= 3 && (
           <p className="text-sm text-gray-base mb-1 cursor-pointer">
             View all comments {comments.length} comments
           </p>
