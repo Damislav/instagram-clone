@@ -8,7 +8,6 @@ import HomeIcon from "../images/svgs/homeicon";
 import SignOut from "../images/svgs/signout";
 export default function Header() {
   const { user } = useContext(UserContext);
-
   const { firebase } = useContext(FirebaseContext);
   const history = useHistory();
 
@@ -52,11 +51,11 @@ export default function Header() {
                 </button>
                 {user && (
                   <div className="flex items-center cursor-pointer">
-                    <Link to={`/p/${user?.username}`}>
+                    <Link to={`/p/${user.displayName.toLowerCase()}`}>
                       <img
                         className="rounded-full h-8 w-8 flex"
-                        src={`/images/avatars/${user?.username}.jpg`}
-                        alt={`${user?.username} profile`}
+                        src={require("../images/avatars/damislav.jpg")}
+                        alt="no photos"
                         // onError={(e) => {
                         //   e.target.src = DEFAULT_IMAGE_PATH;
                         // }}
