@@ -8,7 +8,7 @@ function SignUp() {
   const { firebase } = useContext(FirebaseContext);
 
   const [username, setUsername] = useState("");
-  const [fullname, setFullname] = useState("");
+  const [fullName, setFullName] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -34,14 +34,15 @@ function SignUp() {
         await firebase.firestore().collection("users").add({
           userId: createdUserResult.user.uid,
           username: username.toLocaleLowerCase(),
-          fullname,
+          fullName,
           emailAddress: emailAddress.toLowerCase(),
           following: [],
+          followers: [],
           dateCreated: Date.now(),
         });
         history.push(ROUTES.DASHBOARD);
       } catch (error) {
-        setFullname("");
+        setFullName("");
         setUsername("");
         setEmailAddress("");
         setPassword("");
@@ -81,8 +82,8 @@ function SignUp() {
               type="text"
             />{" "}
             <input
-              value={fullname}
-              onChange={(e) => setFullname(e.target.value)}
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
               className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border-gray-primary rounded mb-2"
               placeholder="Enter your full name"
               aria-label="Enter your full name"
