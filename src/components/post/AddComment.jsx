@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import FirebaseContext from "../../context/firebase";
 import UserContext from "../../context/user";
-
+// import Picker from "emoji-picker-react";
 export default function AddComment({
   docId,
   comments,
@@ -12,6 +12,7 @@ export default function AddComment({
 }) {
   const [comment, setComment] = useState("");
   const { firebase, FieldValue } = useContext(FirebaseContext);
+
   const {
     user: { displayName },
   } = useContext(UserContext);

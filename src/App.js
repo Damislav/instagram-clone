@@ -7,7 +7,7 @@ import "./wdyr";
 import ProtectedRoute from "./helpers/protected.route";
 import IsUserLoggedIn from "./helpers/isUserLoggedIn";
 import Profile from "./pages/profile";
-
+import "./styles/app.css";
 const Login = lazy(() => import("./pages/login"));
 const SignUp = lazy(() => import("./pages/sign-up"));
 const Dashboard = lazy(() => import("./pages/dashboard"));

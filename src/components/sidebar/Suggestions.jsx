@@ -5,7 +5,7 @@ import Skeleton from "react-loading-skeleton";
 
 import SuggestedProfile from "./SuggestedProfile";
 
-const Suggestions = ({ userId, following, loggedInUserDocId }) => {
+export default function Suggestions({ userId, following, loggedInUserDocId }) {
   const [profiles, setProfiles] = useState(null);
 
   useEffect(() => {
@@ -23,6 +23,7 @@ const Suggestions = ({ userId, following, loggedInUserDocId }) => {
   // call the async function ^^^^ within useEffect
   // store it in state
   // go ahead and render (wait on the profiles as in 'skeleton')
+
   return !profiles ? (
     <Skeleton count={1} height={150} className="mt-5" />
   ) : profiles.length > 0 ? (
@@ -44,9 +45,7 @@ const Suggestions = ({ userId, following, loggedInUserDocId }) => {
       </div>
     </div>
   ) : null;
-};
-
-export default Suggestions;
+}
 
 Suggestions.propTypes = {
   userId: PropTypes.string,

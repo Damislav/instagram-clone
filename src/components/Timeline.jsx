@@ -11,6 +11,7 @@ export const Timeline = () => {
   // ¸if user have no photos tell them to create some photos
   return (
     <div className="container col-span-2">
+      {/* TODO SLIDER THAT SHOWS YOUR FRIENDS CLIPS */}
       {!photos ? (
         <>
           <Skeleton count={4} width={640} height={600} />

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Skeleton from "react-loading-skeleton";
 import useUser from "../../hooks/useUser";
-import { isUserFollowingProfile } from "../../services/firebase";
+import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
 export default function Header({
   setFollowerCount,
   photosCount,
@@ -20,15 +20,24 @@ export default function Header({
   const [isFollowingProfile, setIsFollowingProfile] = useState(false);
   const activeBtnFollow = user.username && user.username !== profileUsername;
 
-  const handleToggleFollow = () => {
+  const handleToggleFollow = async () => {
     setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);
 
     setFollowerCount({
-      followerCount: isFollowingProfile
-        ? Number(followers - 1)
-        : Number(followers + 1),
+      followerCount: isFollowingProfile ? followerCount - 1 : followerCount + 1,
     });
+    await toggleFollow(
+      isFollowingProfile,
+      user.docId,
+      profileDocId,
+      profileUserId,
+      user.userId
+    );
   };
+
+// TODO MESSAGES ICON AND FUNCTIONALITY
+// TODO ADD IMAGES ICON AND FUNCTIONALITY
+// TODO HEART ICONS SHOWING WHO LIKED AND COMMENTED
 
   useEffect(() => {
     const isLoggedInUserFollowingProfile = async () => {
@@ -66,6 +75,30 @@ export default function Header({
             </button>
           )}
         </div>
+        <div className="container flex mt-4">
+          {!followers || !following ? (
+            <Skeleton count={1} width={677} height={24} />
+          ) : (
+            <>
+              <p className="mr-10">
+                <span className="font-bold">{photosCount}</span> photos
+              </p>
+              <p className="mr-10">
+                <span className="font-bold">{followerCount}</span>
+                {` `}
+                {followerCount === 1 ? `follower` : ` followers`}
+              </p>
+              <p className="mr-10">
+                <span className="font-bold">{following?.length}</span> following
+              </p>
+            </>
+          )}
+        </div>
+        <div className="container mt-4">
+          <p className="font-medium">
+            {!fullName ? <Skeleton count={1} height={24} /> : fullName}
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -74,12 +107,12 @@ export default function Header({
 Header.propTypes = {
   setFollowerCount: PropTypes.func.isRequired,
   photosCount: PropTypes.number.isRequired,
-  followerCount: PropTypes.number.isRequired,
+  followerCount: PropTypes.array,
   profile: PropTypes.shape({
     docId: PropTypes.string,
     userId: PropTypes.string,
     fullName: PropTypes.string,
-    following: PropTypes.array.isRequired,
+    following: PropTypes.array,
     follower: PropTypes.array,
     profileUsername: PropTypes.string,
   }),
