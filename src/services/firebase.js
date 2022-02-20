@@ -10,7 +10,6 @@ export async function doesUsernameExist(username) {
 
   return result.docs.length > 0;
 }
-
 // ¸get user by username
 export async function getUserByUsername(username) {
   const result = await firebase
@@ -110,7 +109,6 @@ export async function getPhotos(userId, following) {
 
   return photosWithUserDetails;
 }
-
 // ¸get photos by userId
 export async function getUserPhotosByUserId(userId) {
   const result = await firebase

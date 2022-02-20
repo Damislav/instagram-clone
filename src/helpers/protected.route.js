@@ -8,17 +8,26 @@ export default function ProtectedRoute({ user, children, ...rest }) {
       {...rest}
       render={({ location }) => {
         if (user) {
-          return children;
+          return React.cloneElement(children, { user });
         }
+
         if (!user) {
-          <Redirect
-            to={{ pathname: ROUTES.LOGIN, state: { from: location } }}
-          />;
+          return (
+            <Redirect
+              to={{
+                pathname: ROUTES.LOGIN,
+                state: { from: location },
+              }}
+            />
+          );
         }
+
+        return null;
       }}
     />
   );
 }
+
 ProtectedRoute.propTypes = {
   user: PropTypes.object,
   children: PropTypes.object.isRequired,

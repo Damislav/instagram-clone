@@ -10,6 +10,7 @@
     "date-fns": "^2.16.1",
     "emoji-picker-react": "^3.5.1",
     "firebase": "^8.2.5",
+    "loadtest": "^5.2.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -47,6 +48,7 @@
     "autoprefixer": "^10.4.2",
     "postcss": "^8.4.6",
     "tailwindcss": "^3.0.22",
-    "webpack-node-externals": "^3.0.0"
+    "webpack-node-externals": "^3.0.0",
+    "loadtest": "*"
   }
 }

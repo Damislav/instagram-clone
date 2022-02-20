@@ -3,7 +3,6 @@ import React, { lazy, Suspense } from "react";
 import * as ROUTES from "./constants/routes";
 import UserContext from "./context/user";
 import useAuthListeners from "./hooks/useAuthListeners";
-import "./wdyr";
 import ProtectedRoute from "./helpers/protected.route";
 import IsUserLoggedIn from "./helpers/isUserLoggedIn";
 import Profile from "./pages/profile";

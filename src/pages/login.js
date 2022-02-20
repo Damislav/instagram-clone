@@ -79,4 +79,3 @@ function Login() {
 }
 
 export default Login;
-Login.whyDidYouRender = true;
