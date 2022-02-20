@@ -1,26 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import Skeleton from "react-loading-skeleton";
 import usePhotos from "../hooks/usePhotos";
 import Post from "./post";
+import LoggedInUserContext from "../context/logged-in-users";
 
-export const Timeline = () => {
-  const { photos } = usePhotos();
+export default function Timeline() {
+  const { user } = useContext(LoggedInUserContext);
 
-  // ¸on loading the photos we need to use react skeeleton
-  // ¸if we have pohotos render them (create post)
-  // ¸if user have no photos tell them to create some photos
+  const { user: { following } = {} } = useContext(LoggedInUserContext);
+
+  const { photos } = usePhotos(user);
+
   return (
     <div className="container col-span-2">
-      {/* TODO SLIDER THAT SHOWS YOUR FRIENDS CLIPS */}
-      {!photos ? (
-        <>
-          <Skeleton count={4} width={640} height={600} />
-        </>
-      ) : photos.length > 0 ? (
-        photos.map((content) => <Post content={content} key={content.docId} />)
-      ) : (
-        <p className="text-center text-2xl ">Follow people to see photos</p>
-      )}
+      {following === undefined ? (
+        <Skeleton count={2} width={640} height={500} className="mb-5" />
+      ) : following.length === 0 ? (
+        <p className="flex justify-center font-bold">
+          Follow other people to see Photos
+        </p>
+      ) : photos ? (
+        photos.map((content) => <Post key={content.docId} content={content} />)
+      ) : null}
     </div>
   );
-};
+}

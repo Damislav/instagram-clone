@@ -1,28 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Skeleton from "react-loading-skeleton";
 import useUser from "../../hooks/useUser";
 import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
+import UserContext from "../../context/user";
+import { DEFAULT_IMAGE_PATH } from "../../constants/paths";
 export default function Header({
-  setFollowerCount,
   photosCount,
   followerCount,
+  setFollowerCount,
   profile: {
     docId: profileDocId,
     userId: profileUserId,
     fullName,
-    following = [],
-    followers = [],
+    followers,
+    following,
     username: profileUsername,
   },
 }) {
-  const { user } = useUser();
-  const [isFollowingProfile, setIsFollowingProfile] = useState(false);
-  const activeBtnFollow = user.username && user.username !== profileUsername;
+  const { user: loggedInUser } = useContext(UserContext);
+  const { user } = useUser(loggedInUser?.uid);
+  const [isFollowingProfile, setIsFollowingProfile] = useState(null);
+  const activeBtnFollow = user?.username && user?.username !== profileUsername;
 
   const handleToggleFollow = async () => {
     setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);
-
     setFollowerCount({
       followerCount: isFollowingProfile ? followerCount - 1 : followerCount + 1,
     });
@@ -35,10 +37,6 @@ export default function Header({
     );
   };
 
-// TODO MESSAGES ICON AND FUNCTIONALITY
-// TODO ADD IMAGES ICON AND FUNCTIONALITY
-// TODO HEART ICONS SHOWING WHO LIKED AND COMMENTED
-
   useEffect(() => {
     const isLoggedInUserFollowingProfile = async () => {
       const isFollowing = await isUserFollowingProfile(
@@ -47,32 +45,48 @@ export default function Header({
       );
       setIsFollowingProfile(!!isFollowing);
     };
-    if (user.username && profileUserId) {
+
+    if (user?.username && profileUserId) {
       isLoggedInUserFollowingProfile();
     }
-  }, [user.username, profileUserId]);
+  }, [user?.username, profileUserId]);
+
   return (
-    <div className="grid grid-cols-3 gap-4 mx-auto justify-between max-w-screen-lg">
-      <div className="container flex justify-center">
-        {user.username && (
+    <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
+      <div className="container flex justify-center items-center">
+        {profileUsername ? (
           <img
             className="rounded-full h-40 w-40 flex"
-            alt={`${user.username}`}
+            alt={`${fullName} profile picture`}
             src={`/images/avatars/${profileUsername}.jpg`}
+            onError={(e) => {
+              e.target.src = DEFAULT_IMAGE_PATH;
+            }}
           />
+        ) : (
+          <Skeleton circle height={150} width={150} count={1} />
         )}
       </div>
       <div className="flex items-center justify-center flex-col col-span-2">
-        <div className="container flex items-center ">
+        <div className="container flex items-center">
           <p className="text-2xl mr-4">{profileUsername}</p>
-          {activeBtnFollow && (
-            <button
-              onClick={handleToggleFollow}
-              className="bg-blue-medium font-bold text-sm rounded text-white w-20 h-8"
-              type="button"
-            >
-              {isFollowingProfile ? "   Unfollow" : "Follow"}
-            </button>
+          {activeBtnFollow && isFollowingProfile === null ? (
+            <Skeleton count={1} width={80} height={32} />
+          ) : (
+            activeBtnFollow && (
+              <button
+                className="bg-blue-medium font-bold text-sm rounded text-white w-20 h-8"
+                type="button"
+                onClick={handleToggleFollow}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    handleToggleFollow();
+                  }
+                }}
+              >
+                {isFollowingProfile ? "Unfollow" : "Follow"}
+              </button>
+            )
           )}
         </div>
         <div className="container flex mt-4">
@@ -86,7 +100,7 @@ export default function Header({
               <p className="mr-10">
                 <span className="font-bold">{followerCount}</span>
                 {` `}
-                {followerCount === 1 ? `follower` : ` followers`}
+                {followerCount === 1 ? `follower` : `followers`}
               </p>
               <p className="mr-10">
                 <span className="font-bold">{following?.length}</span> following
@@ -105,15 +119,15 @@ export default function Header({
 }
 
 Header.propTypes = {
-  setFollowerCount: PropTypes.func.isRequired,
   photosCount: PropTypes.number.isRequired,
-  followerCount: PropTypes.array,
+  followerCount: PropTypes.number.isRequired,
+  setFollowerCount: PropTypes.func.isRequired,
   profile: PropTypes.shape({
     docId: PropTypes.string,
     userId: PropTypes.string,
     fullName: PropTypes.string,
+    username: PropTypes.string,
+    followers: PropTypes.array,
     following: PropTypes.array,
-    follower: PropTypes.array,
-    profileUsername: PropTypes.string,
-  }),
+  }).isRequired,
 };

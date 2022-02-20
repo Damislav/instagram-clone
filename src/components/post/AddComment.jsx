@@ -12,7 +12,6 @@ export default function AddComment({
 }) {
   const [comment, setComment] = useState("");
   const { firebase, FieldValue } = useContext(FirebaseContext);
-
   const {
     user: { displayName },
   } = useContext(UserContext);
@@ -23,15 +22,13 @@ export default function AddComment({
     setComments([...comments, { displayName, comment }]);
     setComment("");
 
-    firebase
+    return firebase
       .firestore()
       .collection("photos")
       .doc(docId)
       .update({
         comments: FieldValue.arrayUnion({ displayName, comment }),
       });
-
-    return null;
   };
 
   return (

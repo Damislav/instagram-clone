@@ -9,7 +9,7 @@ export default function Header({ username }) {
           <img
             className="rounded-full h-8 w-8 flex mr-3"
             src={`/images/avatars/${username}.jpg`}
-            alt={`${username} profile  `}
+            alt={`${username} profile picture`}
           />
           <p className="font-bold">{username}</p>
         </Link>
@@ -17,6 +17,7 @@ export default function Header({ username }) {
     </div>
   );
 }
-PropTypes.propTypes = {
+
+Header.propTypes = {
   username: PropTypes.string.isRequired,
 };

@@ -15,8 +15,9 @@ export async function getUserByUsername(username) {
   const result = await firebase
     .firestore()
     .collection("users")
-    .where("username", "==", username)
+    .where("username", "==", username.toLowerCase())
     .get();
+
   return result.docs.map((item) => ({
     ...item.data(),
     docId: item.id,
@@ -36,16 +37,23 @@ export async function getUserByUserId(userId) {
 
   return user;
 }
-// GET USER PROFILES
+// check all conditions before limit results
 export async function getSuggestedProfiles(userId, following) {
-  const result = await firebase.firestore().collection("users").limit(10).get();
-  // filter out yourself and filter out followed profiles
+  let query = firebase.firestore().collection("users");
 
-  return result.docs
-    .map((user) => ({ ...user.data(), docId: user.id }))
-    .filter(
-      (profile) => profile.userId !== userId && !following.includes(userId)
-    );
+  if (following.length > 0) {
+    query = query.where("userId", "not-in", [...following, userId]);
+  } else {
+    query = query.where("userId", "!=", userId);
+  }
+  const result = await query.limit(10).get();
+
+  const profiles = result.docs.map((user) => ({
+    ...user.data(),
+    docId: user.id,
+  }));
+
+  return profiles;
 }
 // follow or unfollow function
 export async function updateLoggedInUserFollowing(
@@ -63,6 +71,7 @@ export async function updateLoggedInUserFollowing(
         : FieldValue.arrayUnion(profileId),
     });
 }
+
 // update person that i followed or unfollowed
 export async function updateFollowedUserFollowers(
   profileDocId, // currently logged in user document id (karl's profile)
@@ -123,18 +132,22 @@ export async function getUserPhotosByUserId(userId) {
   }));
   return photos;
 }
-
-export async function isUserFollowingProfile(loggedInUsername, profileUserId) {
+export async function isUserFollowingProfile(
+  loggedInUserUsername,
+  profileUserId
+) {
   const result = await firebase
     .firestore()
     .collection("users")
-    .where("username", "==", loggedInUsername)
+    .where("username", "==", loggedInUserUsername) // karl (active logged in user)
     .where("following", "array-contains", profileUserId)
     .get();
+
   const [response = {}] = result.docs.map((item) => ({
     ...item.data(),
     docId: item.id,
   }));
+
   return response.userId;
 }
 

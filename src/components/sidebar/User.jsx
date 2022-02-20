@@ -1,8 +1,8 @@
 import React from "react";
-
+import PropTypes from "prop-types";
 import Skeleton from "react-loading-skeleton";
+import { DEFAULT_IMAGE_PATH } from "../../constants/paths";
 import { Link } from "react-router-dom";
-
 export default function User({ username, fullName }) {
   return !username || !fullName ? (
     <Skeleton count={1} height={61} />
@@ -17,7 +17,7 @@ export default function User({ username, fullName }) {
           src={`/images/avatars/${username}.jpg`}
           alt=""
           onError={(e) => {
-            // e.target.src = DEFAULT_IMAGE_PATH;
+            e.target.src = DEFAULT_IMAGE_PATH;
           }}
         />
       </div>
@@ -28,7 +28,8 @@ export default function User({ username, fullName }) {
     </Link>
   );
 }
-// User.propTypes = {
-//   username: PropTypes.string,
-//   fullname: PropTypes.string,
-// };
+
+User.propTypes = {
+  username: PropTypes.string,
+  fullName: PropTypes.string,
+};

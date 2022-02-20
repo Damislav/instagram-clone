@@ -6,8 +6,6 @@ export default function Photos({ photos }) {
   return (
     <div className="h-16 border-t border-gray-primary mt-12 pt-4">
       <div className="grid grid-cols-3 gap-8 mt-4 mb-12">
-        {/* TODO OPEN MODAL WHEN CLICKING ON PHOTO, PHOTOS ARE IN ARRAY AND ARE SCROLALBLE WITH ARROWS, CLICKING OUTSIDE OF IMAGE WILL CLOSE MODAL   */}
-        {/*TODO MODAL WILL SHOW COMMENTS AND LIKES, ABILITY TO ADD LIKES AND COMMENTS */}
         {!photos
           ? new Array(12)
               .fill(0)
@@ -17,7 +15,7 @@ export default function Photos({ photos }) {
               <div key={photo.docId} className="relative group">
                 <img src={photo.imageSrc} alt={photo.caption} />
 
-                <div className=" cursor-pointer absolute bottom-0 left-0 bg-gray-200 z-10 w-full justify-evenly items-center h-full bg-black-faded group-hover:flex hidden">
+                <div className="absolute bottom-0 left-0 bg-gray-200 z-10 w-full justify-evenly items-center h-full bg-black-faded group-hover:flex hidden">
                   <p className="flex items-center text-white font-bold">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -62,6 +60,7 @@ export default function Photos({ photos }) {
     </div>
   );
 }
+
 Photos.propTypes = {
   photos: PropTypes.array,
 };

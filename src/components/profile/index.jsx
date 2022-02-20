@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Header from "./Header";
 import { getUserPhotosByUserId } from "../../services/firebase";
 import Photos from "./Photos";
-export default function UserProfile({ user }) {
+export default function Profile({ user }) {
   const reducer = (state, newState) => ({ ...state, ...newState });
   const initialState = {
     profile: {},
@@ -15,6 +15,7 @@ export default function UserProfile({ user }) {
     reducer,
     initialState
   );
+
   useEffect(() => {
     async function getProfileInfoAndPhotos() {
       const photos = await getUserPhotosByUserId(user.userId);
@@ -40,7 +41,7 @@ export default function UserProfile({ user }) {
   );
 }
 
-UserProfile.propTypes = {
+Profile.propTypes = {
   user: PropTypes.shape({
     dateCreated: PropTypes.number,
     emailAddress: PropTypes.string,

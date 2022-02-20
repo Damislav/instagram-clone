@@ -32,12 +32,6 @@ export default function Actions({
     setLikes((likes) => (toggleLiked ? likes - 1 : likes + 1));
   };
 
-  const handleEvent = (event) => {
-    if (event.key === "Enter") {
-      handleToggleLiked();
-    }
-  };
-
   return (
     <>
       <div className="flex justify-between p-4">
