@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Header from "./Header";
 import { getUserPhotosByUserId } from "../../services/firebase";
 import Photos from "./Photos";
+
 export default function Profile({ user }) {
   const reducer = (state, newState) => ({ ...state, ...newState });
   const initialState = {

@@ -68,10 +68,9 @@ export async function updateLoggedInUserFollowing(
     .update({
       following: isFollowingProfile
         ? FieldValue.arrayRemove(profileId)
-        : FieldValue.arrayUnion(profileId),
+        : FieldValue.arrayUnion(profileId,),
     });
 }
-
 // update person that i followed or unfollowed
 export async function updateFollowedUserFollowers(
   profileDocId, // currently logged in user document id (karl's profile)

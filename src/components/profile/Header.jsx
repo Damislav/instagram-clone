@@ -5,6 +5,7 @@ import useUser from "../../hooks/useUser";
 import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
 import UserContext from "../../context/user";
 import { DEFAULT_IMAGE_PATH } from "../../constants/paths";
+
 export default function Header({
   photosCount,
   followerCount,
@@ -97,14 +98,21 @@ export default function Header({
               <p className="mr-10">
                 <span className="font-bold">{photosCount}</span> photos
               </p>
-              <p className="mr-10">
+              <p
+                onClick={() => console.log(user.followers)}
+                className="mr-10 cursor-pointer"
+              >
                 <span className="font-bold">{followerCount}</span>
-                {` `}
-                {followerCount === 1 ? `follower` : `followers`}
+
+                {followerCount === 1 ? ` follower` : ` followers`}
               </p>
-              <p className="mr-10">
-                <span className="font-bold">{following?.length}</span> following
-              </p>
+              <p
+                onClick={() => console.log(user.following)}
+                className="mr-10 cursor-pointer"
+              >
+                <span className="font-bold ">{following?.length}</span>{" "}
+                following
+              </p>{" "}
             </>
           )}
         </div>

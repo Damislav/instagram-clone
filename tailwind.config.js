@@ -1,36 +1,26 @@
 module.exports = {
-  future: {
-    removeDeprecatedGapUtilities: true,
-  },
-
-  content: ["./src/**/*.js", "./src/**/**/*.js"],
-
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    fill: (theme) => ({
-      red: theme("colors.red.primary"),
-    }),
+    screens: {
+      sm: "480px",
+      md: "768px",
+      lg: "976px",
+      xl: "1440px",
+    },
     colors: {
-      white: "#ffffff",
-      blue: {
-        medium: "#005c98",
-      },
-      black: {
-        light: "#262626",
-        faded: "#00000059",
-      },
-      gray: {
-        base: "#616161",
-        background: "#fafafa",
-        primary: "#dbdbdb",
-      },
-      red: {
-        primary: "#ed4956",
-      },
+      blue: "#1fb6ff",
+      pink: "#ff49db",
+      orange: "#ff7849",
+      green: "#13ce66",
+      "gray-dark": "#273444",
+      gray: "#8492a6",
+      "gray-light": "#d3dce6",
     },
-  },
-  variants: {
-    extend: {
-      display: ["group-hover"],
+    fontFamily: {
+      sans: ["Graphik", "sans-serif"],
+      serif: ["Merriweather", "serif"],
     },
+    extend: {},
   },
+  plugins: [],
 };

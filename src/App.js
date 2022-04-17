@@ -3,10 +3,9 @@ import React, { lazy, Suspense } from "react";
 import * as ROUTES from "./constants/routes";
 import UserContext from "./context/user";
 
-import ReactLoader from "./components/Loader";
-
 import ProtectedRoute from "./helpers/protected.route";
 import useAuthListener from "./hooks/useAuthListeners";
+import ReactLoader from "./components/extras/Loader";
 const Login = lazy(() => import("./pages/login"));
 const SignUp = lazy(() => import("./pages/sign-up"));
 const Dashboard = lazy(() => import("./pages/dashboard"));

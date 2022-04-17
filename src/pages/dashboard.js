@@ -6,6 +6,7 @@ import useUser from "../hooks/useUser";
 import LoggedInUserContext from "../context/logged-in-users";
 import Timeline from "../components/Timeline";
 import Header from "../components/Header";
+
 export default function Dashboard({ user: loggedInUser }) {
   const { user, setActiveUser } = useUser(loggedInUser.uid);
   useEffect(() => {
@@ -16,6 +17,7 @@ export default function Dashboard({ user: loggedInUser }) {
     <LoggedInUserContext.Provider value={{ user, setActiveUser }}>
       <div className="bg-gray-background">
         <Header />
+
         <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
           <Timeline />
           <Sidebar />
